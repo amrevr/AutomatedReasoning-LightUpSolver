@@ -1,44 +1,47 @@
 # ILBAI-LightUpSolver
-Repository storing the code, write-up, and ReadME for our final project in Professor Selmer's Fall 2024 Intro to Logic Based AI Class 
 
-## Purpose
-- This project serves to solve Professor Selmer's final project topic, John LBAI-Engineer
+A solver for the **LightUp (Akari)** puzzle, utilizing constraint-based logic and a custom grid representation.
 
-## Baseline rules for the game
-### General Rules/Info:
-  Rules to the lightup/akari game can be found here: 
-    https://www.chiark.greenend.org.uk/~sgtatham/puzzles/doc/lightup.html#lightup
-  
-  - As a summary, all white areas/cells must be lit up (lights extend from the light in all 4 directions until it hits a black cell)
-  - Each black box with a number must have that many lights directly adjacent to it (4 cardinal directions).
-  - Lights must not be lit by another light (Lights should not have line of sight to each other)
-  - Lights can only be placed on white cells
+## Overview
 
-  All test grids setup before hand are available to be tested here (using the seed and game id links provided in the txt files):
-    https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/lightup.html 
+This project implements a solver for the **LightUp** puzzle (also known as Akari). It enforces all game rules and outputs a visual solution. Compatible with grids generated from [Simon Tatham’s LightUp game](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/doc/lightup.html#lightup).
 
-### An overview of some important variable values:
-  
-  The grid is a 2D numpy array where:
-      
-      -1 = white cell (empty)
-      -2 = black cell (no number)
-      0-4 = black cell with number indicating adjacent lights
+## Game Rules (Quick Reference)
 
-  The printed output of the grid has symbols representing the following:
-      
-      □ = white cell (empty)
-      ■ = black cell (no number)
-      0-4 = black cell with number indicating adjacent lights
-      ★ = light 
-      · = light beam (representing the beams that come from the lights)
-      
-  In the Light array we have values representing the following:
-    
-      0 = no light at [i][j]
-      1 = there is a light at [i][j]
+For full details, see the [official rules](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/doc/lightup.html#lightup).
 
-## How to setup
+- All white cells must be illuminated.
+- Lights illuminate cells in all four cardinal directions until a black cell blocks the path.
+- Black cells with numbers specify how many adjacent lights they require.
+- No two lights may illuminate each other.
+- Lights can only be placed on white cells.
+
+Test grids are compatible with the online version, allowing verification via embedded links.
+
+## Grid Format
+
+The puzzle grid is represented as a 2D NumPy array with the following values:
+
+| Value | Meaning                      |
+|-------|------------------------------|
+| `-1`  | White cell (empty)           |
+| `-2`  | Black cell (no number)       |
+| `0-4` | Black cell with adjacent light count |
+
+### Output Symbols
+
+| Symbol  | Meaning                         |
+|---------|---------------------------------|
+| `□`     | White cell                      |
+| `■`     | Black cell (no number)          |
+| `0-4`   | Black cell with number          |
+| `★ `    |Light                            |
+| `·`    | Illuminated cell (light beam)    |
+
+The light placement array uses:
+
+- `0` = no light at `[i][j]`
+- `1` = light placed at `[i][j]`
 
 #### WARNING: DO NOT install "z3" as this is a deprecated AWS package
 
@@ -80,7 +83,7 @@ The txt file follows the following format:
       {},{},{},{},{},{},{}
       {},{},{},{},{},{},{}
 
-- A filled out example file below:
+Here is a filled out example file below:
 
       seed: https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/lightup.html#7x7b20s4d2%23951739128355234
       game_id: https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/lightup.html#7x7:cBg2c01aBb1e1bBa01cBg0c
